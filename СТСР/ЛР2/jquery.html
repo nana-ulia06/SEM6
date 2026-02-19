@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>02-06</title>
+        <style>
+            .myButton {
+                border: 1px solid pink;
+                padding: 5px;
+                text-align: center;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <h1 id="message">jquery test</h1>
+        <button id="myBtn" class="myButton">click me</button>
+
+        <script>
+            $(document).ready(function() {
+                $("#myBtn").click(function() {
+                    $.ajax({
+                        url: '/api/name',
+                        methjd: 'GET',
+                        dataType: 'text',
+                        success: function(data) {
+                            $("#message").text(data).css("color", "pink");
+                        },
+                        error: function(xhr, status, error) {
+                            $("#message").text("error" + error);
+                        }
+                    })
+                });
+            });
+        </script>
+    </body>
+</html>

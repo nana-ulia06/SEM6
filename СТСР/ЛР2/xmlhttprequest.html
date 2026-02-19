@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>02-04</title>
+        <style>
+            .myButton {
+                border: 1px solid pink;
+                padding: 5px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="message">xmlhttprequest test</h1>
+        <button id="myBtn" class="myButton">click me</button>
+
+        <script>
+            const button = document.getElementById("myBtn");
+            const message = document.getElementById("message");
+
+            button.onclick = function() {
+                let req = new XMLHttpRequest();
+
+                req.open('GET', '/api/name', true);
+
+                req.onload = function() {
+                    if (req.status === 200) {
+                        message.innerText = req.responseText;
+                        message.style.color = "pink";
+                    } else {
+                        message.innerText = "error" + req.status;
+                    }
+                };
+                
+                req.send();
+            };
+        </script>
+    </body>
+</html>
