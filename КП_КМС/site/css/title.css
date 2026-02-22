@@ -1,0 +1,38 @@
+html {
+    background-color: rgb(233, 229, 224);
+}
+
+h1, h2 {
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+h2 a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+h2 a:hover {
+    color: #737373;
+    transition: 0.3s;
+}
+
+img {
+    display: block;
+    width: 600px;
+    height: 458px;
+    margin: 20px auto;
+    box-shadow: 5px 5px 10px #555;
+}
+
+@media (max-width: 780px) {
+
+}
+
+@media (max-width: 480px) {
+
+}
