@@ -2,21 +2,49 @@ import time
 from collections import Counter
 
 ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+N = len(ALPHABET)
+FILLER = "Х"
 
-def encryptdecryptPorts(text):
+def split_bigrams(text):
     text = text.upper()
-    result = ""
-    half = len(ALPHABET) // 2
+    cleaned = ""
 
     for char in text:
         if char in ALPHABET:
-            index = ALPHABET.index(char)
-            if index < half:
-                result += ALPHABET[index + half]
-            else:
-                result += ALPHABET[index - half]
-        else:
-            result += char
+            cleaned += char
+
+    if len(cleaned) % 2 != 0:
+        cleaned += FILLER
+
+    bigrams = []
+    for i in range(0, len(cleaned), 2):
+        bigrams.append(cleaned[i:i+2])
+
+    return bigrams
+
+def encryptPorts(text):
+    bigrams = split_bigrams(text)
+    result = []
+
+    for pair in bigrams:
+        row = ALPHABET.index(pair[0])
+        col = ALPHABET.index(pair[1])
+
+        number = row * N + col + 1
+        result.append(f"{number:03d}")  # формат с ведущими нулями
+
+    return " ".join(result)
+
+def decryptPorts(cipher_text):
+    numbers = cipher_text.split()
+    result = ""
+
+    for num in numbers:
+        number = int(num) - 1
+        row = number // N
+        col = number % N
+
+        result += ALPHABET[row] + ALPHABET[col]
 
     return result
 
@@ -66,7 +94,7 @@ with open("input.txt", "r", encoding="utf-8") as file:
 keyword = "ДУЖИК"
 
 startEP = time.perf_counter()
-encryptedPorts = encryptdecryptPorts(text)
+encryptedPorts = encryptPorts(text)
 endEP = time.perf_counter()
 print("Время шифрования шифром Порты: ", endEP - startEP, " сек")
 
@@ -74,7 +102,7 @@ with open("encryptedPorts.txt", "w", encoding="utf-8") as f1:
     f1.write(encryptedPorts)
 
 startDP = time.perf_counter()
-decryptedPorts = encryptdecryptPorts(encryptedPorts)
+decryptedPorts = decryptPorts(encryptedPorts)
 endDP = time.perf_counter()
 print("Время дешифрования шифром Порты: ", endDP - startDP, " сек")
 
